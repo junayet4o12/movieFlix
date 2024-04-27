@@ -22,7 +22,7 @@ const Movies = () => {
         return uniqueLanguages;
     }
     const languagesArray = movies?.map(movie => movie?.movielanguages)
-    const countryArray = movies?.map(movie => movie?.movielanguages)
+    const countryArray = movies?.map(movie => movie?.moviecountries)
     const genreArray = movies?.map(movie => movie?.moviegenres)
     // Flatten the array of arrays
 
@@ -57,8 +57,10 @@ const Movies = () => {
 
     const AllMovies = [...movies]
     const filterMoviesByLanguage = uniqueLanguages.includes(Language) ? AllMovies?.filter(movie=> movie?.movielanguages.includes(Language)) : movies
-    console.log(filterMoviesByLanguage?.length);
+    const filterMoviesByCountry = uniqueCountries.includes(Country) ? filterMoviesByLanguage?.filter(movie=> movie?.moviecountries.includes(Country)) : filterMoviesByLanguage;
+    const filterMoviesByGenre = uniqueGenres.includes(Genre) ? filterMoviesByCountry?.filter(movie=> movie?.moviegenres.includes(Genre)) : filterMoviesByCountry;
 
+    console.log(filterMoviesByGenre?.length)
     return (
         <div className="bg-primary min-h-[calc(100vh-0px)] p-5  sm:p-10 sm:pt-24">
 
@@ -94,7 +96,7 @@ const Movies = () => {
             </div>
             <div className="flex flex-wrap justify-center items-center gap-5">
                 {
-                    filterMoviesByLanguage?.map((movie, idx) => <MovieCart key={idx} movie={movie} />)
+                    filterMoviesByGenre?.map((movie, idx) => <MovieCart key={idx} movie={movie} />)
                 }
             </div>
         </div>
