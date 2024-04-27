@@ -1,7 +1,12 @@
+@import url('https://fonts.googleapis.com/css2?family=Bebas+Neue&display=swap');
+
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
-
+*{
+    font-family: "Bebas Neue", sans-serif;
+    letter-spacing: 2px;
+}
 .navlink {
     padding: 2px 8px;
     border-bottom: 2px solid transparent;  

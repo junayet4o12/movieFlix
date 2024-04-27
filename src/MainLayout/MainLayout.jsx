@@ -3,9 +3,13 @@ import NavBar from "../Components/NavBar/NavBar";
 
 const MainLayout = () => {
     return (
-        <div>
-            <NavBar/>
-            <Outlet/>
+        <div className="relative">
+            <div className="fixed w-full z-20">
+                <NavBar />
+            </div>
+            <div className="pt-[75px] z-10">
+                <Outlet />
+            </div>
         </div>
     );
 };
