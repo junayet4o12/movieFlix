@@ -7,7 +7,7 @@ const MainLayout = () => {
             <div className="fixed w-full z-20">
                 <NavBar />
             </div>
-            <div className="pt-[75px] z-10">
+            <div className=" z-10">
                 <Outlet />
             </div>
         </div>
