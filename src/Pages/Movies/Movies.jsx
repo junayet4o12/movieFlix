@@ -61,6 +61,7 @@ const Movies = () => {
     const filterMoviesByGenre = uniqueGenres.includes(Genre) ? filterMoviesByCountry?.filter(movie=> movie?.moviegenres.includes(Genre)) : filterMoviesByCountry;
 
     console.log(filterMoviesByGenre?.length)
+   
     return (
         <div className="bg-primary min-h-[calc(100vh-0px)] p-5  sm:p-10 sm:pt-24">
 

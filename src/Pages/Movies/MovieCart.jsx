@@ -9,14 +9,12 @@ import {
     Tooltip,
     IconButton,
 } from "@material-tailwind/react";
-import { IoCloudyNightSharp } from "react-icons/io5";
-import { FaWifi, FaFire } from "react-icons/fa";
-import { HiHome } from "react-icons/hi2";
-import { PiMonitorPlayFill } from "react-icons/pi";
 import notFoundImg from '../../assets/notFoundImg.jpg'
-const MovieCart = ({ movie }) => {
+import { useNavigate } from "react-router-dom";
+const MovieCart = ({ movie={} }) => {
     const { movietitle, imdbmovieid, movielanguages, moviecountries, moviemainphotos, moviegenres } = movie
     // console.log(imdbmovieid);
+    const navigate = useNavigate()
     return (
         <Card className="w-full max-w-[26rem] shadow-lg  bg-white/90 text-black border-2">
             <CardHeader floated={false} color="blue-gray" className="max-h-[220px] overflow-hidden">
@@ -24,7 +22,7 @@ const MovieCart = ({ movie }) => {
                     src={moviemainphotos[0] || notFoundImg}
                 />
                 <div className="to-bg-black-10 absolute inset-0 h-full w-full bg-gradient-to-tr from-transparent via-transparent to-black/60 " />
-                <IconButton
+                {/* <IconButton
                     size="sm"
                     color="red"
                     variant="text"
@@ -38,7 +36,7 @@ const MovieCart = ({ movie }) => {
                     >
                         <path d="M11.645 20.91l-.007-.003-.022-.012a15.247 15.247 0 01-.383-.218 25.18 25.18 0 01-4.244-3.17C4.688 15.36 2.25 12.174 2.25 8.25 2.25 5.322 4.714 3 7.688 3A5.5 5.5 0 0112 5.052 5.5 5.5 0 0116.313 3c2.973 0 5.437 2.322 5.437 5.25 0 3.925-2.438 7.111-4.739 9.256a25.175 25.175 0 01-4.244 3.17 15.247 15.247 0 01-.383.219l-.022.012-.007.004-.003.001a.752.752 0 01-.704 0l-.003-.001z" />
                     </svg>
-                </IconButton>
+                </IconButton> */}
             </CardHeader>
             <CardBody>
 
@@ -47,7 +45,7 @@ const MovieCart = ({ movie }) => {
                         {movietitle}
                     </Typography>
 
-                    <Typography
+                    {/* <Typography
                         color="blue-gray"
                         className="flex items-center gap-1.5 font-normal text-black"
                     >
@@ -64,7 +62,7 @@ const MovieCart = ({ movie }) => {
                             />
                         </svg>
                         5.0
-                    </Typography>
+                    </Typography> */}
                 </div>
                 <div>
                     <p>genres: {moviegenres?.join(', ')}</p>
@@ -116,7 +114,7 @@ const MovieCart = ({ movie }) => {
                 </div> */}
             </CardBody>
             <CardFooter className="pt-3">
-                <Button size="lg" fullWidth={true} className="bg-secondary">
+                <Button onClick={()=> navigate(`/movieDetails/${imdbmovieid}`)} size="lg" fullWidth={true} className="bg-secondary">
                     Details
                 </Button>
             </CardFooter>
