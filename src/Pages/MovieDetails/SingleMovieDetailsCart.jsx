@@ -11,10 +11,13 @@ import {
 } from "@material-tailwind/react";
 import notFoundImg from '../../assets/notFoundImg.jpg'
 import { moviesCollectionForStoring } from "../../localStorage/localStorage";
-const SingleMovieDetailsCart = ({ movie,cartMovies }) => {
+import { useContext } from "react";
+import { AuthContext } from "../../AuthProviders/AuthProviders";
+const SingleMovieDetailsCart = ({ movie, cartMovies, removeFromCart }) => {
+    const { refetch, setRefetch } = useContext(AuthContext)
     const { movietitle, imdbmovieid, movielanguages, moviecountries, moviemainphotos, moviegenres } = movie;
     return (
-        <Card className="w-full max-w-[600px] shadow-lg  bg-white/90 text-black border-2">
+        <Card className="w-full max-w-[600px] shadow-lg  bg-white/90 text-black border-2 mx-auto">
             <CardHeader floated={false} color="blue-gray" className="">
                 <img className="object-cover mx-auto"
                     src={moviemainphotos[0] || notFoundImg}
@@ -43,61 +46,37 @@ const SingleMovieDetailsCart = ({ movie,cartMovies }) => {
                         {movietitle}
                     </Typography>
 
-                    
+
                 </div>
                 <div>
                     <p>genres: {moviegenres?.join(', ')}</p>
                 </div>
                 <hr className="border-black my-2 border-[1.3px] w-[70%]" />
                 <div>
-                    <p className="flex gap-2">Languages:  <span className="grid sm:grid-cols-2 gap-x-5 gap-y-3">{movielanguages?.map((lang, idx)=> <span key={idx}><span></span>{idx+1}- {lang}</span>)} </span></p>
+                    <p className="flex gap-2">Languages:  <span className="grid sm:grid-cols-2 gap-x-5 gap-y-3">{movielanguages?.map((lang, idx) => <span key={idx}><span></span>{idx + 1}- {lang}</span>)} </span></p>
                 </div>
                 <hr className="border-black my-2 border-[1.3px] w-[70%]" />
                 <div>
-                    <p className="flex gap-2">Countries:  <span className="grid sm:grid-cols-2 gap-x-5 gap-y-3">{moviecountries?.map((count, idx)=> <span key={idx}><span></span>{idx+1}- {count}</span>)} </span></p>
+                    <p className="flex gap-2">Countries:  <span className="grid sm:grid-cols-2 gap-x-5 gap-y-3">{moviecountries?.map((count, idx) => <span key={idx}><span></span>{idx + 1}- {count}</span>)} </span></p>
                 </div>
                 <hr className="border-black my-2 border-[1.3px] w-[70%]" />
-                {/* <Typography color="gray" className="text-black/70">
-                Enter a freshly updated and thoughtfully furnished peaceful home
-                surrounded by ancient trees, stone walls, and open meadows.
-            </Typography> */}
-                {/* <div className="group mt-8 inline-flex flex-wrap items-center gap-3 text-secondary justify-center w-full">
-                <Tooltip content="$129 per night">
-                    <span className="cursor-pointer rounded-full border border-gray-900/5 bg-gray-900/5 p-3   transition-colors hover:border-gray-900/10 hover:bg-gray-900/10 hover:!opacity-100 group-hover:opacity-70">
-                        <IoCloudyNightSharp />
-                    </span>
-                </Tooltip>
-                <Tooltip content="Free wifi">
-                    <span className="cursor-pointer rounded-full border border-gray-900/5 bg-gray-900/5 p-3   transition-colors hover:border-gray-900/10 hover:bg-gray-900/10 hover:!opacity-100 group-hover:opacity-70">
-                        <FaWifi />
-                    </span>
-                </Tooltip>
-                <Tooltip content="2 bedrooms">
-                    <span className="cursor-pointer rounded-full border border-gray-900/5 bg-gray-900/5 p-3   transition-colors hover:border-gray-900/10 hover:bg-gray-900/10 hover:!opacity-100 group-hover:opacity-70">
-                        <HiHome />
-                    </span>
-                </Tooltip>
-                <Tooltip content={`65" HDTV`}>
-                    <span className="cursor-pointer rounded-full border border-gray-900/5 bg-gray-900/5 p-3   transition-colors hover:border-gray-900/10 hover:bg-gray-900/10 hover:!opacity-100 group-hover:opacity-70">
-                        <PiMonitorPlayFill />
-                    </span>
-                </Tooltip>
-                <Tooltip content="Fire alert">
-                    <span className="cursor-pointer rounded-full border border-gray-900/5 bg-gray-900/5 p-3   transition-colors hover:border-gray-900/10 hover:bg-gray-900/10 hover:!opacity-100 group-hover:opacity-70">
-                        <FaFire />
-                    </span>
-                </Tooltip>
-                <Tooltip content="And +20 more">
-                    <span className="cursor-pointer rounded-full border border-gray-900/5 bg-gray-900/5 p-3   transition-colors hover:border-gray-900/10 hover:bg-gray-900/10 hover:!opacity-100 group-hover:opacity-70 text-sm">
-                        +20
-                    </span>
-                </Tooltip>
-            </div> */}
+
             </CardBody>
             <CardFooter className="pt-3 mt-auto">
-                <Button onClick={()=> moviesCollectionForStoring(imdbmovieid)} size="lg" fullWidth={true} className="bg-secondary">
-                    Add To cart
-                </Button>
+                {
+                    cartMovies ? <Button onClick={() => {
+                        removeFromCart(imdbmovieid)
+                        setRefetch(refetch + 1)
+                    }} size="lg" fullWidth={true} className="bg-secondary">
+                        Remove from cart
+                    </Button> : <Button onClick={() => {
+                        moviesCollectionForStoring(imdbmovieid)
+                        setRefetch(refetch + 1)
+                    }} size="lg" fullWidth={true} className="bg-secondary">
+                        Add To cart
+                    </Button>
+                }
+
             </CardFooter>
         </Card>
     );

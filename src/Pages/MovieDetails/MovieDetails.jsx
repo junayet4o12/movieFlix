@@ -1,24 +1,27 @@
 import { useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
-import MovieCart from "../Movies/MovieCart";
 import SingleMovieDetailsCart from "./SingleMovieDetailsCart";
+import Loading from "../../Shared/Loading/Loading";
 
 const MovieDetails = () => {
+    const [loading, setLoading] = useState(false)
     const { id } = useParams()
     const [movie, setMovie] = useState([])
     useEffect(() => {
+        setLoading(true)
         fetch('/movies.json')
             .then(res => res.json())
             .then(data => {
                 const foundMovie = data?.find(datum => datum?.imdbmovieid === id)
                 setMovie([foundMovie])
+                setLoading(false)
             })
     }, [id])
-    console.log();
     return (
         <div className="min-h-screen bg-primary py-24 flex justify-center items-center px-5 ">
             {
-                movie?.map((data, idx) => <SingleMovieDetailsCart key={idx} movie={data} />)
+                loading ? <Loading /> : movie?.map((data, idx) => <SingleMovieDetailsCart key={idx} movie={data} />)
+
             }
         </div>
     );

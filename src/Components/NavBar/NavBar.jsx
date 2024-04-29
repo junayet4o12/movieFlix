@@ -1,6 +1,7 @@
-import React, { useState } from "react";
+/* eslint-disable react/prop-types */
+import React, { useContext, useState } from "react";
 import {
-    Navbar, 
+    Navbar,
     Typography,
     Button,
     IconButton,
@@ -11,7 +12,9 @@ import { FaHome } from "react-icons/fa";
 import { FaCartFlatbed } from "react-icons/fa6";
 import { MdOutlineLocalMovies } from "react-icons/md";
 import movieFlexLogo from '../../assets/movieFlixLogo.png'
+import { AuthContext } from "../../AuthProviders/AuthProviders";
 const NavBar = () => {
+    const {cartData} = useContext(AuthContext)
     const [openNav, setOpenNav] = useState(false);
     const navigate = useNavigate()
     React.useEffect(() => {
@@ -20,50 +23,53 @@ const NavBar = () => {
             () => window.innerWidth >= 960 && setOpenNav(false),
         );
     }, []);
-
+    const amountOfSavedMovies = cartData?.length
     const navList = (
         <ul className="mt-2 mb-4 flex flex-col gap-2 lg:mb-0 lg:mt-0 lg:flex-row lg:items-center lg:gap-6">
 
 
-             <>
-                    <NavLink to={'/'}>
-                        <Typography
-                            as="li"
-                            variant="small"
-                            color="blue-gray"
-                            className="p-1 font-normal navlink transition-all duration-500"
-                        >
-                            <span className="flex items-center gap-x-1">
-                                <FaHome />  Home
-                            </span>
-                        </Typography>
-                    </NavLink>
-                    <NavLink to={'/movies'}>
-                        <Typography
-                            as="li"
-                            variant="small"
-                            color="blue-gray"
-                            className="p-1 font-normal navlink transition-all duration-500"
-                        >
-                            <span className="flex items-center gap-x-1">
-                                <MdOutlineLocalMovies />   Movies
-                            </span>
-                        </Typography>
-                    </NavLink>
-                    <NavLink to={'/cart'}>
-                        <Typography
-                            as="li"
-                            variant="small"
-                            color="blue-gray"
-                            className="p-1 font-normal navlink transition-all duration-500"
-                        >
-                            <span className="flex items-center gap-x-1">
-                                <FaCartFlatbed />   Cart
-                            </span>
-                        </Typography>
-                    </NavLink>
-                </>
-            
+            <>
+                <NavLink to={'/'}>
+                    <Typography
+                        as="li"
+                        variant="small"
+                        color="blue-gray"
+                        className="p-1 font-normal navlink transition-all duration-500"
+                    >
+                        <span className="flex items-center gap-x-1">
+                            <FaHome />  Home
+                        </span>
+                    </Typography>
+                </NavLink>
+                <NavLink to={'/movies'}>
+                    <Typography
+                        as="li"
+                        variant="small"
+                        color="blue-gray"
+                        className="p-1 font-normal navlink transition-all duration-500"
+                    >
+                        <span className="flex items-center gap-x-1">
+                            <MdOutlineLocalMovies />   Movies
+                        </span>
+                    </Typography>
+                </NavLink>
+                <NavLink to={'/cart'}>
+                    <Typography
+                        as="li"
+                        variant="small"
+                        color="blue-gray"
+                        className="relative p-1 font-normal navlink transition-all duration-500"
+                    >
+                        <span className="flex items-center gap-x-1">
+                            <FaCartFlatbed />   Cart
+                        </span>
+                        {
+                            amountOfSavedMovies>0 && <span className="absolute top-[-12px] right-[-10px] bg-secondary/70 text-white p-1 min-w-5 h-5 flex justify-center items-center rounded-full">{amountOfSavedMovies}</span>
+                        }
+                    </Typography>
+                </NavLink>
+            </>
+
         </ul>
     );
 
@@ -80,7 +86,7 @@ const NavBar = () => {
                     </Typography>
                     <div className="flex items-center gap-4">
                         <div className="mr-4 hidden lg:flex gap-2">{navList}</div>
-                       
+
                         <IconButton
                             variant="text"
                             className="ml-auto h-6 w-6 text-inherit hover:bg-transparent focus:bg-transparent active:bg-transparent lg:hidden"
@@ -122,7 +128,7 @@ const NavBar = () => {
                 </div>
                 <Collapse open={openNav}>
                     {navList}
-                    
+
                 </Collapse>
 
             </Navbar>

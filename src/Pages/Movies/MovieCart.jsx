@@ -11,14 +11,13 @@ import {
 } from "@material-tailwind/react";
 import notFoundImg from '../../assets/notFoundImg.jpg'
 import { useNavigate } from "react-router-dom";
-const MovieCart = ({ movie={} }) => {
+const MovieCart = ({ movie = {} }) => {
     const { movietitle, imdbmovieid, movielanguages, moviecountries, moviemainphotos, moviegenres } = movie
-    // console.log(imdbmovieid);
     const navigate = useNavigate()
     return (
         <Card className="w-full max-w-[26rem] shadow-lg  bg-white/90 text-black border-2">
             <CardHeader floated={false} color="blue-gray" className="max-h-[220px] overflow-hidden">
-                <img className="object-cover"
+                <img className="object-cover mx-auto"
                     src={moviemainphotos[0] || notFoundImg}
                 />
                 <div className="to-bg-black-10 absolute inset-0 h-full w-full bg-gradient-to-tr from-transparent via-transparent to-black/60 " />
@@ -69,11 +68,11 @@ const MovieCart = ({ movie={} }) => {
                 </div>
                 <hr className="border-black my-2 border-[1.3px] w-[70%]" />
                 <div>
-                    <p>Languages: {movielanguages[0]} and more</p>
+                    <p>Languages: {movielanguages?.length > 0 ? `${movielanguages[0]} and more` : 'No Language available'}</p>
                 </div>
                 <hr className="border-black my-2 border-[1.3px] w-[70%]" />
                 <div>
-                    <p>Countries: {moviecountries[0]} and more</p>
+                    <p>Countries: {moviecountries?.length>0 ? `${moviecountries[0]} and more` : 'No Country available'}</p>
                 </div>
                 <hr className="border-black my-2 border-[1.3px] w-[70%]" />
                 {/* <Typography color="gray" className="text-black/70">
@@ -114,7 +113,7 @@ const MovieCart = ({ movie={} }) => {
                 </div> */}
             </CardBody>
             <CardFooter className="pt-3">
-                <Button onClick={()=> navigate(`/movieDetails/${imdbmovieid}`)} size="lg" fullWidth={true} className="bg-secondary">
+                <Button onClick={() => navigate(`/movieDetails/${imdbmovieid}`)} size="lg" fullWidth={true} className="bg-secondary">
                     Details
                 </Button>
             </CardFooter>
